@@ -22,6 +22,7 @@ const challengeSchema = new mongoose.Schema({
     peoplePassed: { type: Number },
     solution: { type: String, required: false, unique: false },
     forbidden: [String],
+    funcName: { type: String, required: true, unique: false },
     next: mongoose.SchemaTypes.ObjectId,
 }, {
     timestamps: true,

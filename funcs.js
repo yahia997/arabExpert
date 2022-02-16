@@ -16,7 +16,7 @@ const getAllChallenges = (req, res) => {
 }
 
 const addChallenge = (req, res) => {
-    const { name, description, type, testing, solution, forbidden } = req.body;
+    const { name, description, type, testing, solution, forbidden, funcName } = req.body;
 
     const newChallenge = new Challenge({
         name,
@@ -24,7 +24,8 @@ const addChallenge = (req, res) => {
         type,
         testing,
         solution,
-        forbidden
+        forbidden,
+        funcName
     });
 
     newChallenge.save()
@@ -40,8 +41,8 @@ const writeFile = (req, res) => {
         .then(challenges => {
 
             fs.writeFileSync('./testFuncs.js', `${code} 
-module.exports = func;`);
-            const func = require('./testFuncs');
+module.exports = {func: ${challenges.funcName} };`);
+            const {func} = require('./testFuncs');
 
             let arr = JSON.parse(challenges.testing);
 
