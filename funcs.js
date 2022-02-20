@@ -1,7 +1,6 @@
 const { User, Challenge } = require('./db');
 const fs = require('fs');
 
-
 const getAllChallenges = (req, res) => {
     const { skip, hardness } = req.query;
     if (hardness === "all") {
@@ -34,38 +33,6 @@ const addChallenge = (req, res) => {
 }
 
 
-const writeFile = (req, res) => {
-    const { code } = req.body;
-
-    Challenge.findById(req.params.id)
-        .then(challenges => {
-
-            fs.writeFileSync('./testFuncs.js', `${code} 
-module.exports = {func: ${challenges.funcName} };`);
-            const {func} = require('./testFuncs');
-
-            let arr = JSON.parse(challenges.testing);
-
-            let resultArr =  arr.map((obj, index) => {
-                return { yourResult: func(...obj.input), expectedResult: obj.result[0] };
-            });
-            
-
-
-            if (challenges.forbidden.length > 0) {
-                challenges.forbidden.forEach((a, index) => {
-                    if (code.includes(a)) {
-                        resultArr.push(`your code shouldn’t contain ${a}`);
-                    }
-                })
-            }
-
-            res.json(resultArr);
-
-        })
-        .catch(err => res.status(400).json(`error: ${err}`));
-}
-
 const getSingleChallenge = (req, res) => {
     const { id } = req.params;
     Challenge.findById(id)
@@ -74,21 +41,66 @@ const getSingleChallenge = (req, res) => {
 }
 
 const peoplePassed = (req, res) => {
-    Challenge.findById(req.params.id)
-    .then(challenges => {
-            challenges.peoplePassed = challenges.peoplePassed + 1;
+    const { points, challengeName } = req.body;
+    
+    User.findById(req.params.id)
+        .then(users => {
+            users.passedChallenges = [...users.passedChallenges, challengeName];
+            users.points = parseInt(users.points) + parseInt(points);
 
-            challenges.save()
+            users.save()
                 .then(() => res.json("some one passed this challenge"))
                 .catch(err => res.status(400).json(`error: ${err}`));
         })
         .catch(err => res.status(400).json(`error: ${err}`));
 }
 
+const increase = (req, res) => {
+    
+    Challenge.findById(req.params.id)
+    .then(challenges => {
+        challenges.peoplePassed = challenges.peoplePassed + 1;
+        
+        challenges.save()
+        .then(() => res.json("some one passed this challenge"))
+        .catch(err => res.json(`error: ${err}`));
+    })
+        .catch(err => res.status(400).json(`error: ${err}`));
+}
+
+const addNewUser = (req, res) => {
+    const { userName, email, password } = req.body;
+
+    var points = 0;
+                
+    const newUser = new User({
+        userName,
+        email,
+        password,
+        points
+    });
+    newUser.save()
+    .then(() => res.send("new user added !"))
+    .catch(err => res.status(400).json(err));
+}
+
+const getSingleUser = (req, res) => {
+    const { userName, password } = req.query;
+
+    User.where("userName").equals(userName)
+        .where("password").equals(password).limit(1)
+        .then(users => res.status(200).json(users))
+        .catch(err => res.status(400).json(err));
+    
+}
+
+
 module.exports = {
     getAllChallenges,
     addChallenge,
-    writeFile,
     getSingleChallenge,
-    peoplePassed
+    peoplePassed,
+    addNewUser,
+    getSingleUser,
+    increase
 };

@@ -3,12 +3,10 @@ const mongoose = require('mongoose');
 // Users //
 const userSchema = new mongoose.Schema({
     userName: {type: String, required: true, unique: true},
-    FirstName: {type: String, required: true, unique: false},
-    lastName: {type: String, required: true, unique: false},
     email: {type: String, required: true, unique: true},
     password: { type: String, required: true, unique: false },
     passedChallenges: [String],
-    lovedChallenges: [String]
+    points: {type: Number, required: false, unique: false}
 }, {
     timestamps: true,
 });
