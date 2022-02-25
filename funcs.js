@@ -3,15 +3,14 @@ const fs = require('fs');
 
 const getAllChallenges = (req, res) => {
     const { skip, hardness } = req.query;
-    if (hardness === "all") {
-        Challenge.find().limit(20).skip(parseInt(skip))
-            .then(challenges => res.json(challenges))
-            .catch(err => res.status(400).json(`error: ${err}`));
-    } else {
-        Challenge.find().limit(20).skip(parseInt(skip)).where("type").equals(hardness)
-            .then(challenges => res.json(challenges))
-            .catch(err => res.status(400).json(`error: ${err}`));        
-    }
+    Challenge.find()
+        .limit(20)
+        .skip(parseInt(skip))
+        .where("type")
+        .equals(hardness)
+        .select("name type")
+        .then(challenges => res.json(challenges))
+        .catch(err => res.status(400).json(`error: ${err}`));        
 }
 
 const addChallenge = (req, res) => {
@@ -94,6 +93,21 @@ const getSingleUser = (req, res) => {
     
 }
 
+const getTops = (req, res) => {
+
+    User.find({})
+        .limit(50)
+        .sort({ "points": -1 })
+        .select("userName points")
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json(err));
+}
+
+const deleteUser = (req, res) => {
+    User.findByIdAndDelete(req.params.id)
+        .then(res => res.status(200).send(res))
+        .catch(err => res.status(400).json(err));        
+}
 
 module.exports = {
     getAllChallenges,
@@ -102,5 +116,7 @@ module.exports = {
     peoplePassed,
     addNewUser,
     getSingleUser,
-    increase
+    increase,
+    getTops,
+    deleteUser
 };
