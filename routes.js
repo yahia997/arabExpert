@@ -9,8 +9,8 @@ const { getAllChallenges,
         deleteUser,
         increase} = require('./funcs');
 
-
-router.route('/users').post(addNewUser).get(getSingleUser);
+router.route("/users/login").post(getSingleUser);
+router.route('/users').post(addNewUser);
 router.route('/users/:id').delete(deleteUser);
 router.route('/challenges').get(getAllChallenges).post(addChallenge);
 router.route('/challenges/:id').get(getSingleChallenge);

@@ -84,7 +84,7 @@ const addNewUser = (req, res) => {
 }
 
 const getSingleUser = (req, res) => {
-    const { userName, password } = req.query;
+    const { userName, password } = req.body;
 
     User.where("userName").equals(userName)
         .where("password").equals(password).limit(1)
