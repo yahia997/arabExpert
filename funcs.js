@@ -1,5 +1,4 @@
 const { User, Challenge } = require('./db');
-const fs = require('fs');
 
 const getAllChallenges = (req, res) => {
     const { skip, hardness } = req.query;
@@ -109,6 +108,32 @@ const deleteUser = (req, res) => {
         .catch(err => res.status(400).json(err));        
 }
 
+const editChallenge = (req, res) => {
+    const { name, description, type, testing, solution, forbidden, funcName } = req.body;
+
+    Challenge.findById(req.params.id)
+        .then(challenge => {
+            challenge.name = name;
+            challenge.description = description;
+            challenge.type = type;
+            challenge.testing = testing;
+            challenge.solution = solution;
+            challenge.forbidden = forbidden;
+            challenge.funcName = funcName;
+
+            challenge.save()
+                .then(() => res.json("challenge updated!"))
+                .catch(err => res.status(400).json("Error:" + err));
+        })
+        .catch(err => res.status(400).json("Error:" + err));
+}
+
+const deleteChallenge = (req, res) => {
+    Challenge.findByIdAndDelete(req.params.id)
+        .then(() => res.json("challenge deleted!"))
+        .catch(err => res.status(400).json("Error:" + err));
+}
+
 module.exports = {
     getAllChallenges,
     addChallenge,
@@ -118,5 +143,7 @@ module.exports = {
     getSingleUser,
     increase,
     getTops,
-    deleteUser
+    deleteUser,
+    editChallenge,
+    deleteChallenge
 };

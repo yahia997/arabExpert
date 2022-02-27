@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true},
     password: { type: String, required: true, unique: false },
     passedChallenges: [String],
-    points: {type: Number, required: false, unique: false}
+    points: {type: Number, required: false, unique: false, default: 0}
 }, {
     timestamps: true,
 });
@@ -17,11 +17,10 @@ const challengeSchema = new mongoose.Schema({
     description: {type: String, required: true, unique: false},
     type: {type: String, required: true, unique: false},
     testing: {type: String, required: true, unique: false},
-    peoplePassed: { type: Number },
+    peoplePassed: {type: Number, required: false, unique: false, default: 0},
     solution: { type: String, required: false, unique: false },
     forbidden: [String],
     funcName: { type: String, required: true, unique: false },
-    next: mongoose.SchemaTypes.ObjectId,
 }, {
     timestamps: true,
 });
