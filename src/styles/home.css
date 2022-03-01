@@ -1,0 +1,113 @@
+h1 {
+    font-size: 40px;
+}
+.big-logo img {
+    width: 250px;
+}
+.big-logo {
+    position: relative;
+    z-index: 55;
+}
+#canvas1 {
+    z-index: -1;
+}
+.num-1 {
+    text-shadow: 0px 0px 20px black;
+}
+.start-btn {
+    box-shadow: 0px 3px 15px black;
+    width: fit-content;
+}
+.join-team {
+    width: fit-content;
+}
+.join-team:hover {
+    color: var(--green);
+}
+.point-b {
+    height: 125px;
+}
+.point-b::before {
+    content: "";
+    display: block;
+    width: 25px !important;
+    height: 25px !important;
+    box-shadow: var(--green) 0px 0px 10px;
+    background-color: var(--green);
+    border-radius: 50%;
+}
+.advantages {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    background-color: transparent;
+    width: 1px;
+    border-left: #999 dashed 7px;
+    height: calc(125px + var(--bs-gutter-x) * .5);
+    margin-right: calc(var(--bs-gutter-x) * .5 - (7px / 2));
+}
+.advantages-start {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    background-color: transparent;
+    width: 1px;
+    border-left: #999 dashed 7px;
+    height: calc((125px / 2) + var(--bs-gutter-x) * .5);
+    margin-top: calc(125px / 2);
+    margin-right: calc(var(--bs-gutter-x) * .5 - (7px / 2));
+}
+.advantages-end {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    background-color: transparent;
+    width: 1px;
+    border-left: #999 dashed 7px;
+    height: calc(125px / 2);
+    margin-bottom: calc(125px / 2);
+    margin-right: calc(var(--bs-gutter-x) * .5 - (7px / 2));
+}
+#input {
+    background-image: linear-gradient(90deg, var(--green), #ffff);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -o-background-clip: text;
+    -ms-background-clip: text;
+    -moz-background-clip: text;
+    width: fit-content;
+}
+#cursor, .cursor{
+    display: block;
+    width: 3px;
+    height: 56.83px;
+    background-color: white;
+    animation: o 0.5s infinite ease-in-out;
+    padding-right: 4px;
+    margin-right: 5px;
+}
+@keyframes o {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.screen img {
+    width: 100%;
+    border-radius: 10px;
+}
+.nav-avatar {
+    width: 35px;
+}
+footer {
+    background-color: #2e2e2e;
+}
+@media (max-width: 768px) {
+    .footer-links {
+        width: 100%;
+        text-align: center;
+    }
+}
