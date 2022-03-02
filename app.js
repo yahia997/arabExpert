@@ -19,7 +19,7 @@ connection.once('open', () => {
     console.log('database connected successfully');
 });
 
-const uri = "mongodb+srv://js-war:wwwWWW@cluster0.c1uv8.mongodb.net/js-war?retryWrites=true&w=majority";
+const uri = "mongodbURI is secret";
 mongoose.connect(uri, { useNewUrlParser: true }); 
 
 
