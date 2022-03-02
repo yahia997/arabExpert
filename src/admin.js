@@ -21,7 +21,7 @@ const ManageChallenge = ({ addOrUpadate }) => {
             let userName = JSON.parse(localStorage.getItem("data")).userName;
             let password = JSON.parse(localStorage.getItem("data")).password;
 
-            if (userName === "admin1" && password === "www@$WWW_gtav5532759") {
+            if (userName === "userName is secret" && password === "password is secret") {
                 setIsAdmin(true);
             }
         }
@@ -357,7 +357,7 @@ const First = () => {
             let userName = JSON.parse(localStorage.getItem("data")).userName;
             let password = JSON.parse(localStorage.getItem("data")).password;
 
-            if (userName === "admin1" && password === "www@$WWW_gtav5532759") {
+            if (userName === "userName is secret" && password === "password is secret") {
                 setIsAdmin(true);
             }
         }
